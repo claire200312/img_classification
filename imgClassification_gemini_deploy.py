@@ -11,6 +11,8 @@
 import os
 from PIL import Image
 import google.genai as genai
+# -0) 라이브러리 추가하기 : streamlit
+import streamlit as st
 #from dotenv import load_dotenv
 
 #load_dotenv()
@@ -24,20 +26,7 @@ def classify_image(prompt, image,model = "gemini-2.0-flash"):
         contents=[prompt, image]
     )
     return response.text
-
-# 3.프롬프트 선언하고 이미지 분류 실행하기
-prompt = """
-영상을 보고 다음 보기 내용이 포함되면 1, 포함되지 않으면 0으로 분류해줘.
-보기 = [건축물, 바다, 산]
-JSON format으로 키는 'building', 'sea', 'mountain'으로 하고 각각 건축물, 바다, 산에 대응되도록 출력해줘.
-자연 이외의 건축물이 조금이라도 존재하면 'building'을 1로, 물이 조금이라도 존재하면 'sea'을 1로, 산이 조금이라도 보이면 'mountain'을 1로 설정해줘.
-markdown format은 포함하지 말아줘.
-"""
-
-
-# -0) 라이브러리 추가하기 : streamlit
-import streamlit as st
-
+    
 #load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
 
@@ -83,3 +72,4 @@ if uploaded_file:
 # -6) 결과 출력하기 : st.write / st.code
         st.subheader('분류 결과')
         st.code(response)
+
